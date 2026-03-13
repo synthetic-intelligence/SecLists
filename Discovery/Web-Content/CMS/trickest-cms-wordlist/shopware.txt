@@ -1,6 +1,7 @@
 config/services_test.xml
 config/routes/test/core_framework.xml
 config/packages/test/usage_data.xml
+config/packages/test/media.xml
 config/bundles.php
 changelog/release-6-5-7-1/2023-11-20-remove-tests-classes-from-services-xml.md
 changelog/release-6-5-1-1/2023-05-30-fix-webpack-cleanup-config.md
@@ -6317,12 +6318,16 @@ tests/unit/Core/Content/Media/Event/UnusedMediaSearchEventTest.php
 tests/unit/Core/Content/Media/Event/MediaUploadedEventTest.php
 tests/unit/Core/Content/Media/MediaUrlPlaceholderHandlerTest.php
 tests/unit/Core/Content/Media/MediaType/SpatialObjectTypeTest.php
+tests/unit/Core/Content/Media/Subscriber/MediaDeletionSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/MediaVisibilityRestrictionSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/CustomFieldsUnusedMediaSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/MediaCreationSubscriberTest.php
 tests/unit/Core/Content/Media/Subscriber/VideoCoverLoadedSubscriberTest.php
+tests/unit/Core/Content/Media/Thumbnail/ExternalThumbnailsParametersTest.php
 tests/unit/Core/Content/Media/Thumbnail/ThumbnailServiceTest.php
+tests/unit/Core/Content/Media/Thumbnail/ExternalThumbnailDataNormalizerTest.php
 tests/unit/Core/Content/Media/Thumbnail/ThumbnailSizeCalculatorTest.php
+tests/unit/Core/Content/Media/Thumbnail/ExternalThumbnailCollectionNormalizerTest.php
 tests/unit/Core/Content/Media/Service/VideoCoverServiceTest.php
 tests/unit/Core/Content/Media/Api/MediaUploadControllerTest.php
 tests/unit/Core/Content/Media/Api/MediaUploadV2ControllerTest.php
@@ -6330,6 +6335,7 @@ tests/unit/Core/Content/Media/MediaEntityTest.php
 tests/unit/Core/Content/Media/SalesChannel/MediaRouteResponseTest.php
 tests/unit/Core/Content/Media/SalesChannel/MediaRouteTest.php
 tests/unit/Core/Content/Media/Upload/MediaUploadParametersTest.php
+tests/unit/Core/Content/Media/Upload/ExternalThumbnailDataTest.php
 tests/unit/Core/Content/Media/Upload/PresignedUploadUrlGeneratorTest.php
 tests/unit/Core/Content/Media/Upload/MediaUploadServiceTest.php
 tests/unit/Core/Content/Flow/Controller/TriggerFlowControllerTest.php
@@ -6791,6 +6797,7 @@ tests/unit/Core/Checkout/Promotion/Api/PromotionActionControllerTest.php
 tests/unit/Core/Checkout/Promotion/Util/PromotionCodeServiceTest.php
 tests/unit/Core/Checkout/Document/Struct/DocumentGenerateOperationTest.php
 tests/unit/Core/Checkout/Document/Twig/DocumentTemplateRendererTest.php
+tests/unit/Core/Checkout/Document/Subscriber/DocumentDeleteSubscriberTest.php
 tests/unit/Core/Checkout/Document/DocumentConfigurationFactoryTest.php
 tests/unit/Core/Checkout/Document/Service/DocumentGeneratorTest.php
 tests/unit/Core/Checkout/Document/Service/ReferenceInvoiceLoaderTest.php
@@ -7340,6 +7347,7 @@ tests/unit/Core/Framework/App/Source/NoDatabaseSourceResolverTest.php
 tests/unit/Core/Framework/App/Source/SourceResolverTest.php
 tests/unit/Core/Framework/App/Telemetry/AppTelemetrySubscriberTest.php
 tests/unit/Core/Framework/App/Payload/AppPayloadServiceHelperTest.php
+tests/unit/Core/Framework/App/ScheduledTask/SystemCheckTaskHandlerTest.php
 tests/unit/Core/Framework/App/ScheduledTask/UpdateAppsTaskTest.php
 tests/unit/Core/Framework/App/ShopIdChangeResolver/ResolverTest.php
 tests/unit/Core/Framework/App/Cookie/AppCookieCollectListenerTest.php
@@ -7451,6 +7459,7 @@ tests/unit/Core/Framework/App/Event/AppFlowActionEventTest.php
 tests/unit/Core/Framework/App/Event/AppPermissionsUpdatedTest.php
 tests/unit/Core/Framework/App/Event/AppInstalledEventTest.php
 tests/unit/Core/Framework/App/Event/AppDeletedEventTest.php
+tests/unit/Core/Framework/App/Event/SystemHeartbeatEventTest.php
 tests/unit/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadTest.php
 tests/unit/Core/Framework/App/Checkout/Payload/AppCheckoutGatewayPayloadServiceTest.php
 tests/unit/Core/Framework/App/Checkout/Gateway/AppCheckoutGatewayTest.php
@@ -8782,6 +8791,7 @@ tests/integration/Core/Content/Media/Thumbnail/ThumbnailServiceTest.php
 tests/integration/Core/Content/Media/MediaFolderServiceTest.php
 tests/integration/Core/Content/Media/Api/MediaVideoCoverControllerTest.php
 tests/integration/Core/Content/Media/Api/MediaUploadControllerTest.php
+tests/integration/Core/Content/Media/Api/MediaUploadV2ControllerTest.php
 tests/integration/Core/Content/Media/Api/MediaFolderControllerTest.php
 tests/integration/Core/Content/Media/MediaEntityTest.php
 tests/integration/Core/Content/Media/Command/GenerateThumbnailsCommandTest.php
@@ -8935,6 +8945,7 @@ tests/integration/Core/Checkout/Promotion/Util/PromotionCodeServiceTest.php
 tests/integration/Core/Checkout/Document/fixture/shopware_logo_blue.svg
 tests/integration/Core/Checkout/Document/DocumentControllerTest.php
 tests/integration/Core/Checkout/Document/DocumentTrait.php
+tests/integration/Core/Checkout/Document/Subscriber/DocumentDeleteSubscriberTest.php
 tests/integration/Core/Checkout/Document/Service/DocumentGeneratorTest.php
 tests/integration/Core/Checkout/Document/Service/ReferenceInvoiceLoaderTest.php
 tests/integration/Core/Checkout/Document/Service/PdfRendererTest.php
@@ -10702,6 +10713,7 @@ src/Administration/Resources/app/administration/src/core/consent/consent.api.ser
 src/Administration/Resources/app/administration/src/core/consent/broadcast-changes.ts
 src/Administration/Resources/app/administration/src/core/consent/consent.api.service.ts
 src/Administration/Resources/app/administration/src/core/consent/consent.store.ts
+src/Administration/Resources/app/administration/src/core/consent/Readme.md
 src/Administration/Resources/app/administration/src/core/consent/events.spec.js
 src/Administration/Resources/app/administration/src/core/consent/handlers.spec.js
 src/Administration/Resources/app/administration/src/core/consent/consent.store.spec.js
@@ -10719,7 +10731,6 @@ src/Administration/Resources/app/administration/src/core/helper/device.helper.js
 src/Administration/Resources/app/administration/src/core/helper/sanitizer.helper.js
 src/Administration/Resources/app/administration/src/core/helper/sanitizer.helper.spec.js
 src/Administration/Resources/app/administration/src/core/helper/retry.helper.spec.js
-src/Administration/Resources/app/administration/src/core/helper/refresh-token.helper.js
 src/Administration/Resources/app/administration/src/core/helper/middleware.helper.js
 src/Administration/Resources/app/administration/src/core/service/jsonapi-parser.service.ts
 src/Administration/Resources/app/administration/src/core/service/util.service.spec.js
@@ -10858,7 +10869,18 @@ src/Administration/Resources/app/administration/src/core/service/api/tag.api.ser
 src/Administration/Resources/app/administration/src/core/service/usage-data-consent-listener.service.ts
 src/Administration/Resources/app/administration/src/core/extension-api.spec.js
 src/Administration/Resources/app/administration/src/core/telemetry/index.ts
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.browser-client.ts
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.browser-storage.ts
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.gateway-client.spec.js
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.shopware-properties.ts
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.browser-client.spec.js
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.gateway-client.ts
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.telemetry-handlers.ts
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.telemetry-handlers.spec.js
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.browser-storage.spec.js
+src/Administration/Resources/app/administration/src/core/telemetry/amplitude/amplitude.shopware-properties.spec.js
 src/Administration/Resources/app/administration/src/core/telemetry/index.spec.js
+src/Administration/Resources/app/administration/src/core/telemetry/Readme.md
 src/Administration/Resources/app/administration/src/core/telemetry/ElementQueries/tagged-buttons.ts
 src/Administration/Resources/app/administration/src/core/telemetry/ElementQueries/tagged-buttons.spec.js
 src/Administration/Resources/app/administration/src/core/telemetry/ElementQueries/product-analytics-tag.ts
@@ -13868,9 +13890,7 @@ src/Administration/Resources/app/administration/src/app/init-post/language.init.
 src/Administration/Resources/app/administration/src/app/init-post/language.init.ts
 src/Administration/Resources/app/administration/src/app/init-post/index.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/worker.init.spec.js
-src/Administration/Resources/app/administration/src/app/init-post/amplitude.telemetry-handlers.ts
 src/Administration/Resources/app/administration/src/app/init-post/usage-data.init.spec.js
-src/Administration/Resources/app/administration/src/app/init-post/amplitude.telemetry-handlers.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/product-analytics.init.spec.js
 src/Administration/Resources/app/administration/src/app/init-post/amplitude.init.ts
 src/Administration/Resources/app/administration/src/app/init-post/usage-data.init.ts
@@ -14556,6 +14576,7 @@ src/Administration/Resources/app/administration/src/app/component/base/sw-radio-
 src/Administration/Resources/app/administration/src/app/component/base/sw-inheritance-switch/sw-inheritance-switch.html.twig
 src/Administration/Resources/app/administration/src/app/component/base/sw-inheritance-switch/index.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-inheritance-switch/sw-inheritance-switch.scss
+src/Administration/Resources/app/administration/src/app/component/base/sw-highlight-text/sw-highlight-text.spec.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-highlight-text/index.js
 src/Administration/Resources/app/administration/src/app/component/base/sw-highlight-text/sw-highlight-text.scss
 src/Administration/Resources/app/administration/src/app/component/base/sw-card-filter/index.js
@@ -16313,7 +16334,12 @@ src/Core/Content/Media/Subscriber/VideoCoverCleanupSubscriber.php
 src/Core/Content/Media/Subscriber/VideoCoverLoadedSubscriber.php
 src/Core/Content/Media/Subscriber/MediaLoadedSubscriber.php
 src/Core/Content/Media/Subscriber/MediaFolderConfigLoadedSubscriber.php
+src/Core/Content/Media/Thumbnail/ExternalThumbnailCollectionNormalizer.php
+src/Core/Content/Media/Thumbnail/ExternalThumbnailCollection.php
+src/Core/Content/Media/Thumbnail/ExternalThumbnailsParameters.php
 src/Core/Content/Media/Thumbnail/ThumbnailSizeCalculator.php
+src/Core/Content/Media/Thumbnail/ExternalThumbnailData.php
+src/Core/Content/Media/Thumbnail/ExternalThumbnailDataNormalizer.php
 src/Core/Content/Media/Thumbnail/ThumbnailService.php
 src/Core/Content/Media/Service/VideoCoverService.php
 src/Core/Content/Media/MediaEntity.php
@@ -17209,6 +17235,7 @@ src/Core/Checkout/Document/Aggregate/DocumentBaseConfig/DocumentBaseConfigEntity
 src/Core/Checkout/Document/Aggregate/DocumentType/DocumentTypeDefinition.php
 src/Core/Checkout/Document/Aggregate/DocumentType/DocumentTypeEntity.php
 src/Core/Checkout/Document/Aggregate/DocumentType/DocumentTypeCollection.php
+src/Core/Checkout/Document/Subscriber/DocumentDeleteSubscriber.php
 src/Core/Checkout/Document/DocumentException.php
 src/Core/Checkout/Document/DocumentIdCollection.php
 src/Core/Checkout/Document/Service/DocumentMerger.php
@@ -18629,6 +18656,8 @@ src/Core/Framework/App/Payload/Source.php
 src/Core/Framework/App/ScheduledTask/DeleteCascadeAppsHandler.php
 src/Core/Framework/App/ScheduledTask/UpdateAppsTask.php
 src/Core/Framework/App/ScheduledTask/DeleteCascadeAppsTask.php
+src/Core/Framework/App/ScheduledTask/SystemHeartbeatTask.php
+src/Core/Framework/App/ScheduledTask/SystemHeartbeatHandler.php
 src/Core/Framework/App/ScheduledTask/UpdateAppsHandler.php
 src/Core/Framework/App/ShopIdChangeResolver/MoveShopPermanentlyStrategy.php
 src/Core/Framework/App/ShopIdChangeResolver/AbstractShopIdChangeStrategy.php
@@ -18706,6 +18735,7 @@ src/Core/Framework/App/AppEntity.php
 src/Core/Framework/App/Event/AppScriptConditionEvents.php
 src/Core/Framework/App/Event/ManifestChangedEvent.php
 src/Core/Framework/App/Event/AppDeletedEvent.php
+src/Core/Framework/App/Event/SystemHeartbeatEvent.php
 src/Core/Framework/App/Event/PostAppDeletedEvent.php
 src/Core/Framework/App/Event/AppFlowActionEvent.php
 src/Core/Framework/App/Event/Hooks/AppLifecycleHook.php
@@ -20091,6 +20121,7 @@ src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schema
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/businessEventsResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/Criteria.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/SalesChannelAnalytics.json
+src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/Media.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/OAuthScopes.json
 src/Core/Framework/Api/ApiDefinition/Generator/Schema/AdminApi/components/schemas/infoConfigResponse.json
 src/Core/Framework/Api/ApiDefinition/Generator/OpenApi/OpenApiSchemaBuilder.php
