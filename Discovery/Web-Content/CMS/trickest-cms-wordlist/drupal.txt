@@ -1421,6 +1421,7 @@ core/modules/user/tests/src/Kernel/UserAdminSettingsFormTest.php
 core/modules/user/tests/src/Kernel/UserNameValidatorTest.php
 core/modules/user/tests/src/Kernel/UserMailDefaultsTest.php
 core/modules/user/tests/src/Kernel/UserNameThemeCacheTest.php
+core/modules/user/tests/src/Kernel/UserFieldValueTest.php
 core/modules/user/tests/src/Kernel/UserFieldsTest.php
 core/modules/user/tests/src/Kernel/Plugin/Validation/Constraint/RoleExistsConstraintValidatorTest.php
 core/modules/user/tests/src/Kernel/UserActionConfigSchemaTest.php
@@ -4907,6 +4908,7 @@ core/modules/language/tests/src/Kernel/ConfigurableLanguageValidationTest.php
 core/modules/language/tests/src/Kernel/LanguageConfigFactoryOverrideTest.php
 core/modules/language/tests/src/Kernel/LanguageSelectWidgetTest.php
 core/modules/language/tests/src/Kernel/Condition/LanguageConditionTest.php
+core/modules/language/tests/src/Unit/ConfigurableLanguageManagerSwitchLinksTest.php
 core/modules/language/tests/src/Unit/ConfigurableLanguageUnitTest.php
 core/modules/language/tests/src/Unit/Plugin/LanguageNegotiation/LanguageNegotiationContentEntityTest.php
 core/modules/language/tests/src/Unit/Plugin/LanguageNegotiation/LanguageNegotiationTestBase.php
@@ -6451,6 +6453,7 @@ core/modules/comment/tests/src/Kernel/CommentUninstallTest.php
 core/modules/comment/tests/src/Kernel/CommentValidationTest.php
 core/modules/comment/tests/src/Kernel/CommentStringIdEntitiesTest.php
 core/modules/comment/tests/src/Kernel/CommentBundlesTest.php
+core/modules/comment/tests/src/Kernel/CommentTokenReplaceTest.php
 core/modules/comment/tests/src/Kernel/Views/CommentDepthTest.php
 core/modules/comment/tests/src/Kernel/Views/CommentViewsKernelTestBase.php
 core/modules/comment/tests/src/Kernel/Views/CommentAdminViewTest.php
@@ -9343,8 +9346,6 @@ core/modules/workspaces/tests/modules/workspaces_test/src/Provider/TestWorkspace
 core/modules/workspaces/tests/modules/workspaces_test/src/Hook/WorkspacesTestHooks.php
 core/modules/workspaces/tests/modules/workspaces_test/src/Entity/EntityTestMulRevPubStringId.php
 core/modules/workspaces/tests/modules/workspaces_test/workspaces_test.info.yml
-core/modules/workspaces/tests/modules/workspace_access_test/workspace_access_test.info.yml
-core/modules/workspaces/tests/modules/workspace_access_test/src/Hook/WorkspaceAccessTestHooks.php
 core/modules/workspaces/tests/fixtures/update/workspaces-10.3.0.php
 core/modules/workspaces/tests/src/Functional/WorkspaceTest.php
 core/modules/workspaces/tests/src/Functional/WorkspaceMenuLinkContentIntegrationTest.php
@@ -10004,6 +10005,14 @@ core/tests/Drupal/KernelTests/Core/Cache/LruCacheGenericTest.php
 core/tests/Drupal/KernelTests/Core/Cache/ChainedFastBackendTest.php
 core/tests/Drupal/KernelTests/Core/Cache/GenericCacheBackendUnitTestBase.php
 core/tests/Drupal/KernelTests/Core/Cache/MemoryCacheGenericTest.php
+core/tests/Drupal/KernelTests/Core/Password/PhpPasswordArgon2idIntegrationTest.php
+core/tests/Drupal/KernelTests/Core/Password/PhpPasswordBcryptIntegrationTest.php
+core/tests/Drupal/KernelTests/Core/Password/PasswordRequirementsDefaultTest.php
+core/tests/Drupal/KernelTests/Core/Password/PasswordRequirementsUnknownTest.php
+core/tests/Drupal/KernelTests/Core/Password/PhpPasswordUnknownAlgorithmIntegrationTest.php
+core/tests/Drupal/KernelTests/Core/Password/PhpPasswordDefaultIntegrationTest.php
+core/tests/Drupal/KernelTests/Core/Password/PasswordTestBase.php
+core/tests/Drupal/KernelTests/Core/Password/PasswordRequirementsBcryptTest.php
 core/tests/Drupal/KernelTests/Core/File/UrlTransformRelativeTest.php
 core/tests/Drupal/KernelTests/Core/File/FileSaveDataTest.php
 core/tests/Drupal/KernelTests/Core/File/RemoteFileSaveDataTest.php
@@ -10151,6 +10160,7 @@ core/tests/Drupal/KernelTests/Core/Entity/EntityLanguageTestBase.php
 core/tests/Drupal/KernelTests/Core/Entity/ContentEntityCacheTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityBundleConditionTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityRevisionsTest.php
+core/tests/Drupal/KernelTests/Core/Entity/EntityFieldValueTraitTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityUUIDTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityQueryAggregateTest.php
 core/tests/Drupal/KernelTests/Core/Entity/EntityViewDisplayValidationTest.php
@@ -10279,11 +10289,9 @@ core/tests/Drupal/KernelTests/Core/Theme/StableLibraryOverrideTestBase.php
 core/tests/Drupal/KernelTests/Core/Theme/TwigAllowListTest.php
 core/tests/Drupal/KernelTests/Core/Theme/TwigDeprecationsTest.php
 core/tests/Drupal/KernelTests/Core/Theme/TwigMarkupInterfaceTest.php
-core/tests/Drupal/KernelTests/Core/Theme/Stable9LibraryOverrideTest.php
 core/tests/Drupal/KernelTests/Core/Theme/ImageTest.php
 core/tests/Drupal/KernelTests/Core/Theme/CvaTest.php
 core/tests/Drupal/KernelTests/Core/Theme/Icon/IconPackManagerKernelTest.php
-core/tests/Drupal/KernelTests/Core/Theme/Stable9TemplateOverrideTest.php
 core/tests/Drupal/KernelTests/Core/Theme/ConfigImportThemeInstallTest.php
 core/tests/Drupal/KernelTests/Core/Theme/TwigEnvironmentTest.php
 core/tests/Drupal/KernelTests/Core/Theme/FrontMatterTest.php
@@ -11443,8 +11451,8 @@ core/tests/Drupal/TestTools/Extension/SchemaInspector.php
 core/tests/Drupal/TestTools/Extension/InfoWriterTrait.php
 core/tests/Drupal/TestTools/PhpUnitTestCaseJUnitResult.php
 core/tests/Drupal/TestTools/Random.php
-core/tests/Drupal/TestTools/PhpUnitCompatibility/PhpUnit11/TestCompatibilityTrait.php
 core/tests/Drupal/TestTools/PhpUnitCompatibility/RunnerVersion.php
+core/tests/Drupal/TestTools/PhpUnitCompatibility/PhpUnit12/TestCompatibilityTrait.php
 core/tests/Drupal/TestTools/Comparator/MarkupInterfaceComparator.php
 core/tests/Drupal/TestTools/ErrorHandler/BootstrapErrorHandler.php
 core/tests/Drupal/TestTools/ErrorHandler/DrupalDebugClassLoader.php
@@ -12800,6 +12808,7 @@ core/lib/Drupal/Core/Entity/KeyValueStore/Query/Condition.php
 core/lib/Drupal/Core/Entity/KeyValueStore/Query/QueryFactory.php
 core/lib/Drupal/Core/Entity/KeyValueStore/Query/Query.php
 core/lib/Drupal/Core/Entity/KeyValueStore/KeyValueEntityStorage.php
+core/lib/Drupal/Core/Entity/EntityFieldValueTrait.php
 core/lib/Drupal/Core/Entity/EntityDescriptionInterface.php
 core/lib/Drupal/Core/Entity/ContentEntityInterface.php
 core/lib/Drupal/Core/Entity/RevisionLogInterface.php
@@ -13871,8 +13880,6 @@ core/recipes/document_media_type/config/field.field.media.document.field_media_d
 core/recipes/document_media_type/config/media.type.document.yml
 core/recipes/document_media_type/tests/src/Functional/GenericTest.php
 core/recipes/document_media_type/recipe.yml
-core/recipes/content_search/tests/src/Functional/GenericTest.php
-core/recipes/content_search/recipe.yml
 core/recipes/article_content_type/config/core.base_field_override.node.article.promote.yml
 core/recipes/article_content_type/config/field.field.node.article.body.yml
 core/recipes/article_content_type/config/node.type.article.yml
@@ -17147,6 +17154,8 @@ core/themes/claro/js/media-library.ui.js
 core/themes/claro/js/autocomplete.js
 core/themes/claro/js/tableselect.js
 core/themes/claro/js/dropbutton.js
+core/themes/stable9/tests/Kernel/Stable9LibraryOverrideTest.php
+core/themes/stable9/tests/Kernel/Stable9TemplateOverrideTest.php
 core/themes/stable9/templates/user/user.html.twig
 core/themes/stable9/templates/user/username.html.twig
 core/themes/stable9/templates/navigation/toolbar.html.twig
@@ -18096,7 +18105,6 @@ core/profiles/demo_umami/config/install/field.field.media.remote_video.field_med
 core/profiles/demo_umami/config/install/core.entity_view_display.media.video.default.yml
 core/profiles/demo_umami/config/install/block_content.type.banner_block.yml
 core/profiles/demo_umami/config/install/block.block.umami_account_menu.yml
-core/profiles/demo_umami/config/install/block.block.umami_search.yml
 core/profiles/demo_umami/config/install/field.storage.node.field_number_of_servings.yml
 core/profiles/demo_umami/config/install/field.field.node.recipe.field_cooking_time.yml
 core/profiles/demo_umami/config/install/block.block.umami_messages.yml
